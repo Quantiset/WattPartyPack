@@ -1,0 +1,16 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1709408933
+icon.svg::CompressedTexture2D::739785373295216700::1709399798::1709399812::1::::<><>::
+::res://Assets/::1709415940
+Ball.png::CompressedTexture2D::1253678507498625115::1709408982::1709409164::1::::<><>::
+Player.png::CompressedTexture2D::8593819324704496568::1709408985::1709409164::1::::<><>::
+PressStart2P-Regular.ttf::FontFile::3335543906844274954::1709415940::1709415942::1::::<><>::
+::res://Scenes/::1709415783
+Pong.tscn::PackedScene::1461946449336332941::1709415783::0::1::::<><>::res://Scripts/Pong.gd<>uid://ksmflrjxxil5::::res://icon.svg<>res://Scripts/Paddle.gd<>uid://dm3iakrhrvl2g::::res://Scenes/Ball.tscn<>uid://yf2osddrvxw4::::res://Scenes/Player.tscn
+Player.tscn::PackedScene::1696519446217031741::1709415783::0::1::::<><>::res://Scripts/Player.gd<>uid://duo57ix54qi3q::::res://Assets/Player.png
+Ball.tscn::PackedScene::8059817039628278432::1709415783::0::1::::<><>::res://Scripts/Ball.gd<>uid://r4j5wspw5da6::::res://Assets/Ball.png
+::res://Scripts/::1709415783
+Ball.gd::GDScript::-1::1709405052::0::1::::<>RigidBody2D<>::
+Paddle.gd::GDScript::-1::1709413192::0::1::::<>CharacterBody2D<>::
+Pong.gd::GDScript::-1::1709403802::0::1::::<>Node2D<>::
+Player.gd::GDScript::-1::1709415783::0::1::::<>CharacterBody2D<>::

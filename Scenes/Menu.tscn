@@ -1,0 +1,120 @@
+[gd_scene load_steps=4 format=3 uid="uid://db7bdujjen6kr"]
+
+[ext_resource type="Script" path="res://Scripts/Menu.gd" id="1_dk2s7"]
+[ext_resource type="FontFile" uid="uid://bnr06kp1ppaba" path="res://Assets/PressStart2P-Regular.ttf" id="2_ag7bc"]
+
+[sub_resource type="Environment" id="Environment_do44e"]
+background_mode = 3
+glow_enabled = true
+glow_bloom = 0.1
+glow_blend_mode = 0
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dk2s7")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_do44e")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CenterContainer"]
+custom_minimum_size = Vector2(650, 500)
+layout_mode = 2
+color = Color(0.109804, 0.152941, 0.180392, 0.478431)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/HBoxContainer"]
+custom_minimum_size = Vector2(300, 500)
+layout_mode = 2
+
+[node name="Container" type="Container" parent="CenterContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ag7bc")
+theme_override_font_sizes/font_size = 20
+text = "Game Select"
+horizontal_alignment = 1
+
+[node name="Container2" type="HSeparator" parent="CenterContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="CenterContainer/HBoxContainer/VBoxContainer"]
+modulate = Color(1, 1, 0.87451, 0.584314)
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ag7bc")
+text = "2D Rocket League"
+
+[node name="Container3" type="HSeparator" parent="CenterContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="CenterContainer/HBoxContainer"]
+modulate = Color(1, 1, 1, 0.52549)
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CenterContainer/HBoxContainer"]
+custom_minimum_size = Vector2(300, 500)
+layout_mode = 2
+
+[node name="Container" type="Container" parent="CenterContainer/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ag7bc")
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+
+[node name="Container2" type="HSeparator" parent="CenterContainer/HBoxContainer/VBoxContainer2"]
+visible = false
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Button" type="HBoxContainer" parent="CenterContainer/HBoxContainer/VBoxContainer2"]
+modulate = Color(1, 1, 0.87451, 0.584314)
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/HBoxContainer/VBoxContainer2/Button"]
+layout_mode = 2
+text = "Enter IP:  "
+
+[node name="LineEdit" type="LineEdit" parent="CenterContainer/HBoxContainer/VBoxContainer2/Button"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Container3" type="HSeparator" parent="CenterContainer/HBoxContainer/VBoxContainer2"]
+visible = false
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="PlayButton" type="Button" parent="CenterContainer/HBoxContainer/VBoxContainer2"]
+modulate = Color(1, 1, 0.87451, 0.584314)
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ag7bc")
+text = "Play!"
+
+[connection signal="pressed" from="CenterContainer/HBoxContainer/VBoxContainer/Button" to="." method="_on_2d_rocket_league_button_pressed"]
+[connection signal="pressed" from="CenterContainer/HBoxContainer/VBoxContainer2/PlayButton" to="." method="_on_play_button_pressed"]
