@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@export var team := 0
+
 @export var acceleration = 10
 @export var max_speed = 200
 
@@ -8,11 +10,30 @@ extends CharacterBody2D
 
 var is_dashing := false
 
+var x: float
+var y: float
+
+func _ready():
+	$Sprite2D.texture = [
+		preload("res://Assets/PlayerR.png"),
+		preload("res://Assets/Player.png")
+	][team]
+
+func update_data(data):
+	if data.btnA and not is_dashing:
+		dash()
+	x = data["joy"]["x"]
+	y = data["joy"]["y"]
+
+func dash():
+	is_dashing = true
+	var t := get_tree().create_tween()
+	$Sprite2D.modulate.a = 2.5
+	t.tween_property($Sprite2D, "modulate:a", 1, 2)
+	t.tween_callback(set.bindv(["is_dashing", false]))
+
 func _physics_process(delta):
 	is_dashing = Input.is_action_pressed("dash")
-	
-	var x = Input.get_axis("ui_left", "ui_right")
-	var y = Input.get_axis("ui_up", "ui_down")
 	
 	velocity += Vector2(x, y) * acceleration * (1.15 if is_dashing else 1.0)
 	if velocity.length() > max_speed:
@@ -34,3 +55,4 @@ func _process(delta):
 	inner_line.add_point($Pivot/LineEmitter.global_position)
 	if inner_line.get_point_count() > inner_line_length:
 		inner_line.remove_point(0)
+

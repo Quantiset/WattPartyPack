@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://of6c7vsy1bpo"]
+
+[ext_resource type="Texture2D" uid="uid://duo57ix54qi3q" path="res://Assets/Player.png" id="1_j0y8b"]
+[ext_resource type="Script" path="res://Scripts/PlayerTron.gd" id="1_xf72d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7hlqs"]
+
+[node name="PlayerTron" type="Area2D" groups=["Player"]]
+script = ExtResource("1_xf72d")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_j0y8b")
+offset = Vector2(-0.5, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_7hlqs")
+
+[node name="Line2D" type="Line2D" parent="."]
+top_level = true
+width = 6.0
+
+[node name="Node" type="Node2D" parent="."]
+
+[node name="LinePos" type="Marker2D" parent="Node"]
+position = Vector2(0, 11)

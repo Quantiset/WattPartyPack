@@ -1,32 +1,50 @@
 extends Node
 
-@export var websocket_url = "wss://libwebsockets.org"
+@export var websocket_url = "ws://watt-party-pack.in-my-ellement.partykit.dev/party/my-new-room"
 
-var _client := WebSocketMultiplayerPeer.new()
+var socket := WebSocketPeer.new()
+
+var id_to_player := {}
+
+signal client_connected(data)
 
 func _ready():
-	return
-	
-	_client.connection_closed.connect(_closed)
-	_client.connection_error.connect(_closed)
-	_client.connection_established.connect(_connected)
-	_client.data_received.connect(_on_data)
+	socket.connect_to_url(websocket_url)
 
-	var err = _client.connect_to_url(websocket_url, ["lws-mirror-protocol"])
-	if err != OK:
-		print("Unable to connect")
-		set_process(false)
+func register_player(id: String, player):
+	print(id, id_to_player)
+	id_to_player[id] = player
 
-func _closed(was_clean = false):
-	print("Closed, clean: ", was_clean)
-	set_process(false)
-
-func _connected(proto = ""):
-	print("Connected with protocol: ", proto)
-	_client.get_peer(1).put_packet("Test packet".to_utf8_buffer())
-
-func _on_data():
-	print("Got data from server: ", _client.get_peer(1).get_packet().get_string_from_utf8())
+func parse_data(data: Dictionary):
+	if data.id in id_to_player:
+		id_to_player[data.id].update_data(data)
+	else:
+		client_connected.emit(data)
 
 func _process(delta):
-	_client.poll()
+	socket.poll()
+	var state = socket.get_ready_state()
+	if state == WebSocketPeer.STATE_OPEN:
+		while socket.get_available_packet_count():
+			var str = ""
+			for ascii_val in socket.get_packet():
+				str += char(ascii_val)
+			var json = JSON.new()
+			json.parse(str)
+			var error = json.parse(str)
+			if error == OK:
+				var data_received = json.data
+				if typeof(data_received) == TYPE_DICTIONARY:
+					parse_data(data_received)
+				else:
+					print("Unexpected data")
+			else:
+				print("JSON Parse Error: ", json.get_error_message(), " in ", str, " at line ", json.get_error_line())
+	elif state == WebSocketPeer.STATE_CLOSING:
+		# Keep polling to achieve proper close.
+		pass
+	elif state == WebSocketPeer.STATE_CLOSED:
+		var code = socket.get_close_code()
+		var reason = socket.get_close_reason()
+		print("WebSocket closed with code: %d, reason %s. Clean: %s" % [code, reason, code != -1])
+		set_process(false) # Stop processing.

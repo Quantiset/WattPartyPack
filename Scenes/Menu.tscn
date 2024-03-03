@@ -67,6 +67,17 @@ text = "2D Rocket League"
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
+[node name="Button2" type="Button" parent="CenterContainer/HBoxContainer/VBoxContainer"]
+modulate = Color(1, 1, 0.87451, 0.584314)
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ag7bc")
+text = "Tron"
+
+[node name="Container4" type="HSeparator" parent="CenterContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
 [node name="VSeparator" type="VSeparator" parent="CenterContainer/HBoxContainer"]
 modulate = Color(1, 1, 1, 0.52549)
 custom_minimum_size = Vector2(20, 0)
@@ -117,4 +128,5 @@ theme_override_fonts/font = ExtResource("2_ag7bc")
 text = "Play!"
 
 [connection signal="pressed" from="CenterContainer/HBoxContainer/VBoxContainer/Button" to="." method="_on_2d_rocket_league_button_pressed"]
+[connection signal="pressed" from="CenterContainer/HBoxContainer/VBoxContainer/Button2" to="." method="_on_tron_pressed"]
 [connection signal="pressed" from="CenterContainer/HBoxContainer/VBoxContainer2/PlayButton" to="." method="_on_play_button_pressed"]

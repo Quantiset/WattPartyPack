@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://u3gbrmgdhe7v"]
+[gd_scene load_steps=7 format=3 uid="uid://u3gbrmgdhe7v"]
 
 [ext_resource type="Script" path="res://Scripts/Pong.gd" id="1_3q30o"]
 [ext_resource type="FontFile" uid="uid://bnr06kp1ppaba" path="res://Assets/PressStart2P-Regular.ttf" id="3_oyxjb"]
 [ext_resource type="PackedScene" uid="uid://dm3iakrhrvl2g" path="res://Scenes/Ball.tscn" id="4_c7xya"]
-[ext_resource type="PackedScene" uid="uid://yf2osddrvxw4" path="res://Scenes/Player.tscn" id="6_xqv1e"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_uuhts"]
 friction = 0.0
@@ -111,9 +110,6 @@ position = Vector2(1280, 720)
 scale = Vector2(-1, -1)
 color = Color(0.00784314, 0.0392157, 0.0705882, 1)
 polygon = PackedVector2Array(0, 0, 110, 0, 110, 160, 35, 250, 35, 470, 110, 560, 110, 720, 0, 720)
-
-[node name="Player" parent="." instance=ExtResource("6_xqv1e")]
-position = Vector2(216, 337)
 
 [connection signal="body_entered" from="LeftSector" to="." method="_on_left_sector_body_entered"]
 [connection signal="body_entered" from="RightSector" to="." method="_on_right_sector_body_entered"]

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://d1u127pa83pcv"]
+
+[ext_resource type="PackedScene" uid="uid://of6c7vsy1bpo" path="res://Scenes/PlayerTron.tscn" id="1_ek0vu"]
+[ext_resource type="Script" path="res://Scripts/Tron.gd" id="1_helw7"]
+
+[node name="Tron" type="Node2D"]
+script = ExtResource("1_helw7")
+
+[node name="PlayerTron" parent="." instance=ExtResource("1_ek0vu")]
+position = Vector2(418, 189)
