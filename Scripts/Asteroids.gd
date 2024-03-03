@@ -18,7 +18,8 @@ func _ready():
 func _player_connected(data: Dictionary):
 	var player = preload("res://Scenes/Player.tscn").instantiate()
 	add_child(player)
-	player.disable()
+	if init_timer > 0:
+		player.disable()
 	players += 1
 	players_left += 1
 	player.dead.connect(_player_death.bind(player))

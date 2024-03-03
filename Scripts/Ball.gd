@@ -10,8 +10,8 @@ var init_vel := Vector2()
 var reset_state := Vector2()
 	
 func _integrate_forces(state):
-	if reset_state.length() > 0:
-		state.transform = Transform2D(0.0, reset_state)
+	if reset_state.length() > 0 or (get_node("../Center").position - position).length() > 1000:
+		state.transform = Transform2D(0.0, get_node("../Center").position)
 		reset_state = Vector2()
 		linear_velocity = Vector2()
 		line.clear_points()

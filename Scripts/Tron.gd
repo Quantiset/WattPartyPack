@@ -14,11 +14,12 @@ func _ready():
 
 func _player_connected(data: Dictionary):
 	var player = preload("res://Scenes/PlayerTron.tscn").instantiate()
-	add_child(player)
 	total_players += 1
 	players_left += 1
 	player.position = Vector2(randi() % 950 + 120, randi() % 500 + 100)
-	player.t_disable()
+	add_child(player)
+	if init_timer > 0:
+		player.t_disable()
 	Websocket.register_player(data.id, player)
 
 func _physics_process(delta):

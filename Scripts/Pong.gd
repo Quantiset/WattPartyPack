@@ -20,9 +20,10 @@ func _player_connected(data: Dictionary):
 	var player = preload("res://Scenes/Player.tscn").instantiate()
 	player.team = players % 2
 	add_child(player)
-	player.disable()
+	if init_timer > 0:
+		player.disable()
 	players += 1
-	player.position = $Center.position - Vector2((2*(players%2)-1)*200, 0)
+	player.position = $Center.position - Vector2((2*(players%2)-1)*200+randi()%20-10, randi()%20-10)
 	Websocket.register_player(data.id, player)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

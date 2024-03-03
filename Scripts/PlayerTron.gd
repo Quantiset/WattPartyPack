@@ -74,7 +74,7 @@ func update_data(data: Dictionary):
 
 func change_dir():
 	if not has_started:
-		await get_tree().create_timer(0.8).timeout
+		await get_tree().create_timer(0.2)
 	if not is_raycasting: return
 	get_parent().add_raycast(raycast)
 	raycast = RayCast2D.new()

@@ -12,3 +12,6 @@ res://Scripts/Pong.gd
 res://Scripts/Websocket.gd
 res://Scripts/Tron.gd
 res://Scripts/Asteroids.gd
+res://Scripts/PlayerTron.gd
+res://Scripts/Ball.gd
+res://Scripts/Player.gd
