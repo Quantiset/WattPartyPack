@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://d1u127pa83pcv"]
+[gd_scene load_steps=3 format=3 uid="uid://d1u127pa83pcv"]
 
 [ext_resource type="Script" path="res://Scripts/Tron.gd" id="1_helw7"]
 [ext_resource type="FontFile" uid="uid://bnr06kp1ppaba" path="res://Assets/PressStart2P-Regular.ttf" id="2_i42nb"]
-[ext_resource type="PackedScene" uid="uid://dnfc5q03vmfec" path="res://Scenes/Leaderboards.tscn" id="3_yfuup"]
 
 [node name="Tron" type="Node2D"]
 script = ExtResource("1_helw7")
@@ -27,6 +26,7 @@ target_position = Vector2(1282, 0)
 collide_with_areas = true
 
 [node name="Pause" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="Pause"]
 offset_right = 1278.0
@@ -49,33 +49,13 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_i42nb")
 theme_override_font_sizes/font_size = 30
 text = "Join Now.."
-horizontal_alignment = 1
 
 [node name="Container" type="Container" parent="Pause/CenterContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 
 [node name="Label2" type="Label" parent="Pause/CenterContainer/VBoxContainer"]
-modulate = Color(0.309804, 0.458824, 1, 1)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_i42nb")
 theme_override_font_sizes/font_size = 20
 text = "Starting in 10"
-horizontal_alignment = 1
-
-[node name="Container2" type="Container" parent="Pause/CenterContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-
-[node name="Label3" type="Label" parent="Pause/CenterContainer/VBoxContainer"]
-custom_minimum_size = Vector2(600, 0)
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_i42nb")
-theme_override_font_sizes/font_size = 20
-text = "Don't run into the lines created by other players
-
-Survivor gets 3 pts, second person gets 2, third person gets 1"
-horizontal_alignment = 1
-autowrap_mode = 3
-
-[node name="Leaderboards" parent="." instance=ExtResource("3_yfuup")]

@@ -5,7 +5,7 @@ extends RigidBody2D
 
 @onready var line: Line2D = $Line2D
 
-var init_vel := Vector2(20,10)*5
+var init_vel := Vector2()
 
 var reset_state := Vector2()
 	
