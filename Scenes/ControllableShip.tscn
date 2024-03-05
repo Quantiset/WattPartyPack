@@ -8,3 +8,5 @@ script = ExtResource("1_t0hiq")
 team = 0
 acceleration = 15
 max_speed = 300
+
+[node name="DashTimer" type="Timer" parent="." index="5"]

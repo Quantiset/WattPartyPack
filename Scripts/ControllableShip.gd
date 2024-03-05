@@ -60,7 +60,7 @@ func _physics_process(delta):
 	
 	if Input.is_action_pressed("dash"):
 		is_dashing = true
-		$DashTimer.play(0.1)
+		$DashTimer.start(0.1)
 		$DashTimer.timeout.connect(func():
 			is_dashing = false
 		)

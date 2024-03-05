@@ -50,11 +50,22 @@ horizontal_alignment = 1
 
 [node name="Container6" type="HSeparator" parent="CenterContainer/HBoxContainer/VBoxContainer"]
 modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(0, 10)
+custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="CenterContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
+
+[node name="ColorRect" type="Panel" parent="CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer3/ColorRect"]
+layout_mode = 0
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 305.0
+offset_bottom = 50.0
+color = Color(0.658824, 1, 0.909804, 0.0705882)
 
 [node name="Button2" type="Label" parent="CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer3"]
 modulate = Color(1, 1, 0.87451, 0.584314)
@@ -78,6 +89,17 @@ layout_mode = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="ColorRect" type="Panel" parent="CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer/ColorRect"]
+layout_mode = 0
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 305.0
+offset_bottom = 50.0
+color = Color(0.658824, 1, 0.909804, 0.0705882)
+
 [node name="Button" type="Label" parent="CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 modulate = Color(1, 1, 0.87451, 0.584314)
 custom_minimum_size = Vector2(0, 45)
@@ -99,6 +121,17 @@ layout_mode = 2
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="CenterContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
+
+[node name="ColorRect" type="Panel" parent="CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer2/ColorRect"]
+layout_mode = 0
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 305.0
+offset_bottom = 50.0
+color = Color(0.658824, 1, 0.909804, 0.0705882)
 
 [node name="Button2" type="Label" parent="CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
 modulate = Color(1, 1, 0.87451, 0.584314)
