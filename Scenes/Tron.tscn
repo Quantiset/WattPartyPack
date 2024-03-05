@@ -1,8 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://d1u127pa83pcv"]
+[gd_scene load_steps=5 format=3 uid="uid://d1u127pa83pcv"]
 
 [ext_resource type="Script" path="res://Scripts/Tron.gd" id="1_helw7"]
 [ext_resource type="FontFile" uid="uid://bnr06kp1ppaba" path="res://Assets/PressStart2P-Regular.ttf" id="2_i42nb"]
 [ext_resource type="PackedScene" uid="uid://dnfc5q03vmfec" path="res://Scenes/Leaderboards.tscn" id="3_yfuup"]
+
+[sub_resource type="Environment" id="Environment_r5iv4"]
+background_mode = 3
+glow_enabled = true
+glow_bloom = 0.1
+glow_blend_mode = 0
 
 [node name="Tron" type="Node2D"]
 script = ExtResource("1_helw7")
@@ -79,3 +85,6 @@ horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="Leaderboards" parent="." instance=ExtResource("3_yfuup")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_r5iv4")

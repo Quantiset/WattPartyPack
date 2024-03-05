@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dm3iakrhrvl2g"]
+[gd_scene load_steps=12 format=3 uid="uid://dm3iakrhrvl2g"]
 
 [ext_resource type="Script" path="res://Scripts/Ball.gd" id="1_i3b40"]
 [ext_resource type="Texture2D" uid="uid://r4j5wspw5da6" path="res://Assets/Ball.png" id="2_vpajb"]
@@ -32,10 +32,29 @@ scale_curve = SubResource("CurveTexture_m50fq")
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
+[sub_resource type="Gradient" id="Gradient_kpeas"]
+offsets = PackedFloat32Array(0, 0.311475, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_opkng"]
+gradient = SubResource("Gradient_kpeas")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_clhr7"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(10, 1, 1)
+angle_max = 90.0
+spread = 180.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, 0, 0)
+scale_min = 5.0
+scale_max = 12.0
+color_ramp = SubResource("GradientTexture1D_opkng")
+
 [node name="Ball" type="RigidBody2D" groups=["Ball"]]
-position = Vector2(388, 312)
 physics_material_override = SubResource("PhysicsMaterial_o5q0b")
 gravity_scale = 0.0
+inertia = 1.0
 angular_damp_mode = 1
 script = ExtResource("1_i3b40")
 line_length = 75
@@ -58,4 +77,13 @@ z_index = -1
 width_curve = SubResource("Curve_dallh")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
 texture = ExtResource("2_vpajb")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
+modulate = Color(1, 1, 1, 0.0509804)
+show_behind_parent = true
+z_index = -1
+amount = 650
+process_material = SubResource("ParticleProcessMaterial_clhr7")
+lifetime = 3.0

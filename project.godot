@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Websocket="*res://Scripts/Websocket.gd"
+Globals="*res://Scripts/Globals.gd"
 
 [display]
 
@@ -40,5 +41,4 @@ shoot={
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
 environment/defaults/default_clear_color=Color(0, 0.0196078, 0.0588235, 1)

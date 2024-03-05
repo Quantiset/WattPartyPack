@@ -30,7 +30,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ColorRect" type="ColorRect" parent="CenterContainer"]
-custom_minimum_size = Vector2(350, 550)
+custom_minimum_size = Vector2(850, 550)
 layout_mode = 2
 color = Color(0.109804, 0.152941, 0.180392, 0.478431)
 
@@ -48,6 +48,29 @@ theme_override_font_sizes/font_size = 20
 text = "Game Queue"
 horizontal_alignment = 1
 
+[node name="Container6" type="HSeparator" parent="CenterContainer/HBoxContainer/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="CenterContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button2" type="Label" parent="CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer3"]
+modulate = Color(1, 1, 0.87451, 0.584314)
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_ag7bc")
+text = "Shooter!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Line2D" type="LineEdit" parent="CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ag7bc")
+text = "1"
+
 [node name="Container2" type="HSeparator" parent="CenterContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
@@ -55,13 +78,15 @@ layout_mode = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Button" type="Label" parent="CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 modulate = Color(1, 1, 0.87451, 0.584314)
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("2_ag7bc")
 text = "Pong++"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Line2D" type="LineEdit" parent="CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -75,13 +100,15 @@ layout_mode = 2
 [node name="HBoxContainer2" type="HBoxContainer" parent="CenterContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Button2" type="Button" parent="CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
+[node name="Button2" type="Label" parent="CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
 modulate = Color(1, 1, 0.87451, 0.584314)
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("2_ag7bc")
 text = "Tron"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Line2D" type="LineEdit" parent="CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
@@ -91,22 +118,6 @@ text = "1"
 [node name="Container5" type="HSeparator" parent="CenterContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
-
-[node name="HBoxContainer3" type="HBoxContainer" parent="CenterContainer/HBoxContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Button2" type="Button" parent="CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer3"]
-modulate = Color(1, 1, 0.87451, 0.584314)
-custom_minimum_size = Vector2(0, 45)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_fonts/font = ExtResource("2_ag7bc")
-text = "Shooter!"
-
-[node name="Line2D" type="LineEdit" parent="CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer3"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_ag7bc")
-text = "1"
 
 [node name="Container4" type="HSeparator" parent="CenterContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 10)
@@ -120,7 +131,14 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_ag7bc")
 text = "Play!"
 
-[connection signal="pressed" from="CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer/Button" to="." method="_on_2d_rocket_league_button_pressed"]
-[connection signal="pressed" from="CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer2/Button2" to="." method="_on_tron_pressed"]
-[connection signal="pressed" from="CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer3/Button2" to="." method="_on_tron_pressed"]
+[node name="VSeparator" type="VSeparator" parent="CenterContainer/HBoxContainer"]
+modulate = Color(1, 1, 1, 0.235294)
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="CenterContainer/HBoxContainer"]
+custom_minimum_size = Vector2(450, 0)
+layout_mode = 2
+columns = 3
+
 [connection signal="pressed" from="CenterContainer/HBoxContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]

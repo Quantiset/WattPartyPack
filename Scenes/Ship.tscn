@@ -1,0 +1,71 @@
+[gd_scene load_steps=9 format=3 uid="uid://yf2osddrvxw4"]
+
+[ext_resource type="Script" path="res://Scripts/Ship.gd" id="1_lsljt"]
+[ext_resource type="Texture2D" uid="uid://duo57ix54qi3q" path="res://Assets/Player.png" id="2_dcgij"]
+[ext_resource type="FontFile" uid="uid://bnr06kp1ppaba" path="res://Assets/PressStart2P-Regular.ttf" id="3_7jr35"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0yf4x"]
+
+[sub_resource type="Curve" id="Curve_rvqhb"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_n5g7r"]
+offsets = PackedFloat32Array(0, 0.311475, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_lpqms"]
+gradient = SubResource("Gradient_n5g7r")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6qffx"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(10, 1, 1)
+angle_max = 90.0
+direction = Vector3(0, 1, 0)
+spread = 90.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, 0, 0)
+scale_min = 5.0
+scale_max = 12.0
+color_ramp = SubResource("GradientTexture1D_lpqms")
+
+[node name="Ship" type="CharacterBody2D" groups=["Player"]]
+script = ExtResource("1_lsljt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_dcgij")
+offset = Vector2(-0.5, 0)
+
+[node name="CollisionPolygon2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_0yf4x")
+
+[node name="Line2D" type="Line2D" parent="."]
+top_level = true
+z_index = -1
+width = 9.0
+width_curve = SubResource("Curve_rvqhb")
+
+[node name="Pivot" type="Node2D" parent="."]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Pivot"]
+modulate = Color(1, 1, 1, 0.0509804)
+show_behind_parent = true
+z_index = -1
+position = Vector2(0, 16)
+amount = 650
+process_material = SubResource("ParticleProcessMaterial_6qffx")
+lifetime = 3.0
+
+[node name="LineEmitter" type="Marker2D" parent="Pivot"]
+position = Vector2(0, 13)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -8.0
+offset_top = -29.0
+offset_right = 32.0
+offset_bottom = -6.0
+theme_override_fonts/font = ExtResource("3_7jr35")
+theme_override_font_sizes/font_size = 15
+text = "1"

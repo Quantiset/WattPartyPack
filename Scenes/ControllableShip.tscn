@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://djpc4dborehvi"]
+
+[ext_resource type="PackedScene" uid="uid://yf2osddrvxw4" path="res://Scenes/Ship.tscn" id="1_mwcv5"]
+[ext_resource type="Script" path="res://Scripts/ControllableShip.gd" id="1_t0hiq"]
+
+[node name="ControllableShip" instance=ExtResource("1_mwcv5")]
+script = ExtResource("1_t0hiq")
+team = 0
+acceleration = 15
+max_speed = 300

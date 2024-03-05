@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://u3gbrmgdhe7v"]
+[gd_scene load_steps=12 format=3 uid="uid://u3gbrmgdhe7v"]
 
 [ext_resource type="Script" path="res://Scripts/Pong.gd" id="1_3q30o"]
 [ext_resource type="FontFile" uid="uid://bnr06kp1ppaba" path="res://Assets/PressStart2P-Regular.ttf" id="3_oyxjb"]
 [ext_resource type="PackedScene" uid="uid://dm3iakrhrvl2g" path="res://Scenes/Ball.tscn" id="4_c7xya"]
+[ext_resource type="PackedScene" uid="uid://djpc4dborehvi" path="res://Scenes/ControllableShip.tscn" id="5_0c17v"]
 [ext_resource type="PackedScene" uid="uid://dnfc5q03vmfec" path="res://Scenes/Leaderboards.tscn" id="5_bfnx5"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_uuhts"]
@@ -11,6 +12,26 @@ bounce = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nxbyv"]
 size = Vector2(72, 353)
+
+[sub_resource type="Curve" id="Curve_qeje7"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.197802), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_1am1s"]
+curve = SubResource("Curve_qeje7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jr4ay"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 200, 1)
+spread = 10.0
+initial_velocity_min = 30.0
+initial_velocity_max = 50.0
+gravity = Vector3(2, 0, 0)
+scale_min = 2.0
+scale_max = 4.0
+scale_curve = SubResource("CurveTexture_1am1s")
+turbulence_enabled = true
 
 [sub_resource type="Environment" id="Environment_dw4c4"]
 background_mode = 3
@@ -43,6 +64,13 @@ polygon = PackedVector2Array(110, 560, 35, 470, 35, 250, 110, 160)
 position = Vector2(-19, 30.5)
 shape = SubResource("RectangleShape2D_nxbyv")
 
+[node name="GPUParticles2D" type="GPUParticles2D" parent="LeftSector"]
+modulate = Color(1, 0.701961, 0, 1)
+position = Vector2(16, 0)
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_jr4ay")
+lifetime = 4.0
+
 [node name="RightSector" type="Area2D" parent="."]
 position = Vector2(1226, 336)
 
@@ -57,9 +85,17 @@ scale = Vector2(-1, -1)
 color = Color(0.121569, 0.529412, 1, 1)
 polygon = PackedVector2Array(110, 560, 35, 470, 35, 250, 110, 160)
 
+[node name="GPUParticles2D" type="GPUParticles2D" parent="RightSector"]
+modulate = Color(0, 0.815686, 1, 1)
+position = Vector2(-56, 0)
+scale = Vector2(-1, -1)
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_jr4ay")
+lifetime = 4.0
+
 [node name="Line2D" type="Line2D" parent="."]
 position = Vector2(-40, 0)
-points = PackedVector2Array(150, 0, 150, 160, 75, 250, 75, 360, 75, 470, 150, 560, 150, 720)
+points = PackedVector2Array(150, -105, 150, 160, 75, 250, 75, 360, 75, 470, 150, 560, 150, 708.07, 150, 777)
 width = 5.0
 default_color = Color(1, 1, 1, 0.690196)
 
@@ -71,28 +107,9 @@ default_color = Color(1, 1, 1, 0.356863)
 [node name="Line2D2" type="Line2D" parent="."]
 position = Vector2(1320, 720)
 scale = Vector2(-1, -1)
-points = PackedVector2Array(150, 0, 150, 160, 75, 250, 75, 360, 75, 470, 150, 560, 150, 720)
+points = PackedVector2Array(150, -65, 150, 12.2585, 150, 160, 75, 250, 75, 360, 75, 470, 150, 560, 150, 711.573, 150, 804)
 width = 5.0
 default_color = Color(1, 1, 1, 0.690196)
-
-[node name="LLabel" type="Label" parent="."]
-offset_left = 471.0
-offset_top = 8.0
-offset_right = 632.0
-offset_bottom = 68.0
-theme_override_fonts/font = ExtResource("3_oyxjb")
-theme_override_font_sizes/font_size = 60
-text = "0"
-horizontal_alignment = 2
-
-[node name="RLabel" type="Label" parent="."]
-offset_left = 650.0
-offset_top = 8.0
-offset_right = 675.0
-offset_bottom = 31.0
-theme_override_fonts/font = ExtResource("3_oyxjb")
-theme_override_font_sizes/font_size = 60
-text = "0"
 
 [node name="Center" type="Marker2D" parent="."]
 position = Vector2(640, 360)
@@ -103,7 +120,7 @@ environment = SubResource("Environment_dw4c4")
 [node name="Polygon2D" type="Polygon2D" parent="."]
 z_index = -1
 color = Color(0.00784314, 0.0392157, 0.0705882, 1)
-polygon = PackedVector2Array(0, 0, 110, 0, 110, 160, 35, 250, 35, 470, 110, 560, 110, 720, 0, 720)
+polygon = PackedVector2Array(0, 0, 110, -109, 110, 10.5346, 110, 160, 35, 250, 35, 470, 110, 560, 110, 720, 0, 720)
 
 [node name="Polygon2D2" type="Polygon2D" parent="."]
 z_index = -1
@@ -159,13 +176,41 @@ custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_oyxjb")
 theme_override_font_sizes/font_size = 20
-text = "First Team to reach 5 points wins!
+text = "First Team to reach 3 points wins!
 
 Each player in winning team recieves 2 points"
 horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="Leaderboards" parent="." instance=ExtResource("5_bfnx5")]
+
+[node name="ControllableShip" parent="." instance=ExtResource("5_0c17v")]
+position = Vector2(224, 104)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+zoom = Vector2(1.05, 1.05)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="LLabel" type="Label" parent="HUD"]
+offset_left = 471.0
+offset_top = 8.0
+offset_right = 632.0
+offset_bottom = 68.0
+theme_override_fonts/font = ExtResource("3_oyxjb")
+theme_override_font_sizes/font_size = 60
+text = "0"
+horizontal_alignment = 2
+
+[node name="RLabel" type="Label" parent="HUD"]
+offset_left = 650.0
+offset_top = 8.0
+offset_right = 710.0
+offset_bottom = 68.0
+theme_override_fonts/font = ExtResource("3_oyxjb")
+theme_override_font_sizes/font_size = 60
+text = "0"
 
 [connection signal="body_entered" from="LeftSector" to="." method="_on_left_sector_body_entered"]
 [connection signal="body_entered" from="RightSector" to="." method="_on_right_sector_body_entered"]

@@ -5,7 +5,7 @@ extends Node2D
 var total_players := 0
 var players_left := 0
 
-var init_timer := 15.0
+var init_timer := 9.0 
 var is_enabled := false
 
 func _ready():
@@ -20,6 +20,8 @@ func _player_connected(data: Dictionary):
 	add_child(player)
 	if init_timer > 0:
 		player.t_disable()
+	else:
+		player.t_enable()
 	Websocket.register_player(data.id, player)
 
 func _physics_process(delta):
@@ -41,15 +43,16 @@ func _physics_process(delta):
 			if raycast.get_collider().is_in_group("Player"):
 				raycast.get_collider().disable()
 				players_left -= 1
-				if not raycast.get_collider().id in Websocket.id_to_scores:
-					reset()
-					return
-				if players_left == 2:
-					Websocket.id_to_scores[raycast.get_collider().id] += 1
-				if players_left == 1:
-					Websocket.id_to_scores[raycast.get_collider().id] += 2
+				if false:
+					if not raycast.get_collider().id in Websocket.id_to_scores:
+						reset()
+						return
+					if players_left == 2:
+						Websocket.id_to_scores[raycast.get_collider().id] += 1
+					if players_left == 1:
+						Websocket.id_to_scores[raycast.get_collider().id] += 2
 				if players_left == 0:
-					Websocket.id_to_scores[raycast.get_collider().id] += 3
+					#Websocket.id_to_scores[raycast.get_collider().id] += 3
 					reset()
 
 

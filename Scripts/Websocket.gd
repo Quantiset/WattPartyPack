@@ -7,8 +7,6 @@ var socket := WebSocketPeer.new()
 var id_to_player := {}
 var id_to_scores := {}
 
-var queued_scenes := []
-
 signal client_connected(data)
 
 func _ready():
@@ -16,8 +14,9 @@ func _ready():
 	socket.connect_to_url(websocket_url)
 
 func register_player(id: String, player):
-	print(id, id_to_player)
-	id_to_player[id] = player
+	if not id in id_to_scores:
+		id_to_scores[id] = 0
+		id_to_player[id] = player
 
 func parse_data(data: Dictionary):
 	if data.id in id_to_player and is_instance_valid(id_to_player[data.id]):
@@ -28,7 +27,6 @@ func parse_data(data: Dictionary):
 func _process(delta):
 	socket.poll()
 	var state = socket.get_ready_state()
-	print(state)
 	if state == WebSocketPeer.STATE_OPEN:
 		while socket.get_available_packet_count():
 			var str = ""
@@ -54,10 +52,3 @@ func _process(delta):
 		print("WebSocket closed with code: %d, reason %s. Clean: %s" % [code, reason, code != -1])
 		set_process(false) # Stop processing.
 
-func next_scene():
-	print(queued_scenes)
-	if queued_scenes.size() == 0:
-		get_tree().change_scene_to_file("res://Scenes/Menu.tscn")
-	else:
-		var path = queued_scenes.pop_at(0)
-		get_tree().change_scene_to_file(path)

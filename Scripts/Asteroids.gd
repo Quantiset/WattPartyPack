@@ -1,10 +1,6 @@
-extends Node2D
+extends Map
 
-var players := 0
 var players_left := 0
-
-var init_timer := 15.0 
-var is_enabled := false
 
 var timer_since_last_pickup := 0.0
 
@@ -13,19 +9,13 @@ func _ready():
 		player.can_shoot = true
 		player.disable()
 		player.dead.connect(_player_death.bind(player))
-	Websocket.client_connected.connect(_player_connected)
 
 func _player_connected(data: Dictionary):
-	var player = preload("res://Scenes/Player.tscn").instantiate()
-	add_child(player)
-	if init_timer > 0:
-		player.disable()
-	players += 1
+	var player = super._player_connected(data)
 	players_left += 1
 	player.dead.connect(_player_death.bind(player))
 	player.position = $Center.position + Vector2(randi()%500-250,randi()%300-150)
 	player.can_shoot = true
-	Websocket.register_player(data.id, player)
 
 func _physics_process(delta):
 	
@@ -50,8 +40,12 @@ func _physics_process(delta):
 
 func _player_death(player):
 	players_left -= 1
-	if players_left == 0:
-		#Websocket.id_to_scores[player.id] += 3
+	if players_left == 3:
+		Websocket.id_to_scores[player.id] += 1
+	if players_left == 2:
+		Websocket.id_to_scores[player.id] += 2
+	if players_left == 1:
+		Websocket.id_to_scores[player.id] += 3
 		$Leaderboards.display()
 		init_timer = 999999
 		is_enabled = false

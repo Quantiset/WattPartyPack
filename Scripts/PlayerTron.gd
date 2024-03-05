@@ -32,6 +32,7 @@ func _ready():
 	
 
 func _physics_process(delta):
+	
 	if not is_enabled:
 		return
 	
@@ -61,16 +62,23 @@ func t_disable():
 	is_enabled = false
 
 func update_data(data: Dictionary):
-	dir = Vector2(data["joy"]["x"], data["joy"]["y"]).normalized()
-	if dir.dot(Vector2.RIGHT) > 0.7:
+	var x = 0.0
+	var y = 0.0
+	if str(data["joy"]["x"]).is_valid_float():
+		x = float(data["joy"]["x"])
+	if str(data["joy"]["y"]).is_valid_float():
+		y = float(data["joy"]["y"])
+	dir = Vector2(x,y).normalized()
+	if dir.dot(Vector2.RIGHT) > 0.72:
 		dir = Vector2(1,0)
-	elif dir.dot(Vector2.UP) > 0.7:
+	elif dir.dot(Vector2.UP) > 0.72:
 		dir = Vector2(0,-1)
-	elif dir.dot(Vector2.LEFT) > 0.7:
+	elif dir.dot(Vector2.LEFT) > 0.72:
 		dir = Vector2(-1,0)
-	elif dir.dot(Vector2.DOWN) > 0.7:
+	elif dir.dot(Vector2.DOWN) > 0.72:
 		dir = Vector2(0,1)
 	id = data["id"]
+	$Label.text = str(data["num"])
 
 func change_dir():
 	if not has_started:
