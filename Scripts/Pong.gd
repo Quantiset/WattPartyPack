@@ -50,8 +50,8 @@ func _physics_process(delta):
 	
 
 func update_scores():
-	$HUD/RLabel.text = str(r_score)
-	$HUD/LLabel.text = str(l_score)
+	$RLabel.text = str(r_score)
+	$LLabel.text = str(l_score)
 	if r_score >= BEST_OF or l_score >= BEST_OF:
 		var winning_team = (1 if r_score >= BEST_OF else 0)
 		for player in get_tree().get_nodes_in_group("Player"):
@@ -65,15 +65,23 @@ func update_scores():
 func _on_left_sector_body_entered(body):
 	if body.is_in_group("Ball"):
 		r_score += 1
-		ball.set_pos($Center.position)
+		reset_ball()
 		update_scores()
+		shockwave(body.position)
 
 func _on_right_sector_body_entered(body):
 	if body.is_in_group("Ball"):
 		l_score += 1
-		ball.set_pos($Center.position)
+		reset_ball()
 		update_scores()
+		shockwave(body.position)
 
 func _pickup_body_entered(body, pickup):
 	if body.is_in_group("Player"):
 		body.dash()
+
+func reset_ball():
+	ball.delete()
+	ball = preload("res://Scenes/Ball.tscn").instantiate()
+	ball.set_pos($Center.position)
+	add_child(ball)

@@ -40,8 +40,12 @@ offset = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_7hlqs")
 
 [node name="Line2D" type="Line2D" parent="."]
+modulate = Color(0.25098, 1, 0.87451, 1)
+show_behind_parent = true
 top_level = true
+z_index = -2
 width = 6.0
+joint_mode = 1
 
 [node name="Node" type="Node2D" parent="."]
 

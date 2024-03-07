@@ -6,17 +6,34 @@ var players := 0
 var init_timer := Globals.LOADING_TIME
 var is_enabled := false
 
+var shockwave_push_player_strength := 150
+
+var PLAYER_SCENE := preload("res://Scenes/ControllableShip.tscn")
+
 func _ready():
 	$Pause.show()
 	Websocket.client_connected.connect(_player_connected)
 
 func _player_connected(data: Dictionary):
-	var player = preload("res://Scenes/ControllableShip.tscn").instantiate()
+	var player = PLAYER_SCENE.instantiate()
 	add_child(player)
-	if init_timer > 0:
-		player.disable()
-	else:
-		player.enable()
+	if player.has_method("enable"):
+		if init_timer > 0:
+			player.disable()
+		else:
+			player.enable()
 	players += 1
 	Websocket.register_player(data.id, player)
 	return player
+
+func _process(delta):
+	$Background.scroll_offset += Vector2(1,0.2) * delta * 2
+
+func shockwave(pos, push_players := true):
+	var uv = (pos - ($Camera2D.position + $Camera2D.offset - Vector2(1280, 720)/2)) / Vector2(1280, 720)
+	$HUD/Shockwave.material.set_shader_parameter("center", uv)
+	$HUD/ShockwaveAnim.play("Shockwave")
+	
+	if push_players:
+		for player in get_tree().get_nodes_in_group("Player"):
+			player.velocity += (player.position - pos) * shockwave_push_player_strength

@@ -2,8 +2,8 @@ extends Ship
 
 @export var team := 0
 
-@export var acceleration = 15
-@export var max_speed = 300
+@export var acceleration = 20
+@export var max_speed = 250
 
 var is_dashing := false
 
@@ -69,7 +69,7 @@ func _physics_process(delta):
 	velocity += Vector2(x, y) * acceleration * (1.15 if is_dashing else 1.0)
 	if velocity.length() > max_speed * (1.45 if is_dashing else 1.0):
 		velocity = velocity.normalized() * max_speed * (1.45 if is_dashing else 1.0)
-	velocity = velocity.lerp(Vector2(), 0.05)
+	velocity = velocity.lerp(Vector2(), 0.02)
 	
 	$Sprite2D.rotation = velocity.angle() + PI/2
 	$CollisionPolygon2D.rotation = velocity.angle() + PI/2

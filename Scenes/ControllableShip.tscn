@@ -6,7 +6,7 @@
 [node name="ControllableShip" instance=ExtResource("1_mwcv5")]
 script = ExtResource("1_t0hiq")
 team = 0
-acceleration = 15
-max_speed = 300
+acceleration = 20
+max_speed = 250
 
 [node name="DashTimer" type="Timer" parent="." index="5"]

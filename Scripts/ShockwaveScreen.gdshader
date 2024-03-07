@@ -3,7 +3,7 @@ shader_type canvas_item;
 
 uniform float strength: hint_range(0.0, 0.1, 0.001) = 0.08;
 uniform vec2 center = vec2(0.5, 0.5);
-uniform float radius: hint_range(0.0, 1.0, 0.001) = 0.25;
+uniform float radius: hint_range(0.0, 1.5, 0.001) = 0.25;
 
 uniform float aberration: hint_range(0.0, 1.0, 0.001) = 0.425;
 uniform float width: hint_range(0.0, 0.1, 0.0001) = 0.04;

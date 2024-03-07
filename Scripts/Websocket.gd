@@ -1,6 +1,6 @@
 extends Node
 
-@export var websocket_url = "ws://watt-party-pack.in-my-ellement.partykit.dev/party/my-new-room"
+var websocket_url = "ws://watt-party-pack.in-my-ellement.partykit.dev/party/my-new-room"
 
 var socket := WebSocketPeer.new()
 
@@ -33,7 +33,6 @@ func _process(delta):
 			for ascii_val in socket.get_packet():
 				str += char(ascii_val)
 			var json = JSON.new()
-			json.parse(str)
 			var error = json.parse(str)
 			if error == OK:
 				var data_received = json.data

@@ -1,28 +1,21 @@
-extends Node2D
+extends Map
 
 @onready var raycasts := [$RayCast2D,$RayCast2D2,$RayCast2D3,$RayCast2D4]
 
-var total_players := 0
 var players_left := 0
-
-var init_timer := 9.0 
-var is_enabled := false
 
 func _ready():
 	$Pause.show()
+	PLAYER_SCENE = preload("res://Scenes/PlayerTron.tscn")
 	Websocket.client_connected.connect(_player_connected)
 
 func _player_connected(data: Dictionary):
-	var player = preload("res://Scenes/PlayerTron.tscn").instantiate()
-	total_players += 1
-	players_left += 1
-	player.position = Vector2(randi() % 950 + 120, randi() % 500 + 100)
-	add_child(player)
+	var player = super._player_connected(data)
 	if init_timer > 0:
 		player.t_disable()
 	else:
-		player.t_enable()
-	Websocket.register_player(data.id, player)
+		player.t_disable()
+	player.position = Vector2(randi() % 950 + 120, randi() % 500 + 100)
 
 func _physics_process(delta):
 	
@@ -43,16 +36,12 @@ func _physics_process(delta):
 			if raycast.get_collider().is_in_group("Player"):
 				raycast.get_collider().disable()
 				players_left -= 1
-				if false:
-					if not raycast.get_collider().id in Websocket.id_to_scores:
-						reset()
-						return
-					if players_left == 2:
-						Websocket.id_to_scores[raycast.get_collider().id] += 1
-					if players_left == 1:
-						Websocket.id_to_scores[raycast.get_collider().id] += 2
-				if players_left == 0:
-					#Websocket.id_to_scores[raycast.get_collider().id] += 3
+				if players_left == 3:
+					Websocket.id_to_scores[raycast.get_collider().id] += 1
+				if players_left == 2:
+					Websocket.id_to_scores[raycast.get_collider().id] += 2
+				if players_left == 1:
+					Websocket.id_to_scores[raycast.get_collider().id] += 3
 					reset()
 
 

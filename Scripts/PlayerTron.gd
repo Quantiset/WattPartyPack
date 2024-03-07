@@ -8,6 +8,8 @@ extends Area2D
 var velocity := Vector2()
 var point_to := Vector2()
 
+var raycasts := []
+
 var frames := 0
 
 var is_enabled := false
@@ -25,10 +27,14 @@ func _ready():
 	
 	trail_mod = Color.from_hsv(randf(),1,1)
 	raycast = RayCast2D.new()
+	raycasts.append(raycast)
 	raycast.top_level = true
+	$Line2D.modulate.h += (randi() % 50) / 100.0
 	point_to = $Node/LinePos.global_position
 	raycast.exclude_parent = true
 	get_parent().call_deferred("add_child",raycast)
+	line.call_deferred("add_point", global_position)
+	line.call_deferred("add_point", global_position)
 	
 
 func _physics_process(delta):
@@ -36,7 +42,9 @@ func _physics_process(delta):
 	if not is_enabled:
 		return
 	
-	if dir != cached_dir:
+	dir = to_directional(Vector2(Input.get_axis("ui_left", "ui_right"), Input.get_axis("ui_up", "ui_down")))
+	
+	if not dir.is_zero_approx() and dir != cached_dir:
 		cached_dir = dir
 		velocity = dir * SPEED
 		change_dir()
@@ -45,15 +53,16 @@ func _physics_process(delta):
 			get_parent().reset()
 	
 	position += velocity * delta
-	raycast.position = position
-	raycast.target_position = point_to - $Node/LinePos.global_position
 	$Sprite2D.rotation = lerp($Sprite2D.rotation, velocity.angle()+PI/2, 0.9)
 	$Node.rotation = lerp($Node.rotation, velocity.angle()+PI/2, 0.9)
 	
 	frames += 1
 	
-	if frames % 3 == 1 and is_raycasting:
-		line.add_point($Node/LinePos.global_position)
+	if is_raycasting:
+		raycast.position = position
+		raycast.target_position = point_to - $Node/LinePos.global_position
+		line.remove_point(line.get_point_count()-1)
+		line.add_point(global_position)
 
 func t_enable():
 	is_enabled = true
@@ -68,7 +77,14 @@ func update_data(data: Dictionary):
 		x = float(data["joy"]["x"])
 	if str(data["joy"]["y"]).is_valid_float():
 		y = float(data["joy"]["y"])
-	dir = Vector2(x,y).normalized()
+	dir = to_directional(Vector2(x,y))
+	id = data["id"]
+	$Label.text = str(data["num"])
+
+func to_directional(inp: Vector2):
+	if inp.is_zero_approx():
+		return Vector2()
+	var dir = inp.normalized()
 	if dir.dot(Vector2.RIGHT) > 0.72:
 		dir = Vector2(1,0)
 	elif dir.dot(Vector2.UP) > 0.72:
@@ -77,8 +93,7 @@ func update_data(data: Dictionary):
 		dir = Vector2(-1,0)
 	elif dir.dot(Vector2.DOWN) > 0.72:
 		dir = Vector2(0,1)
-	id = data["id"]
-	$Label.text = str(data["num"])
+	return dir
 
 func change_dir():
 	if not has_started:
@@ -86,12 +101,14 @@ func change_dir():
 	if not is_raycasting: return
 	get_parent().add_raycast(raycast)
 	raycast = RayCast2D.new()
+	raycasts.append(raycast)
 	raycast.collide_with_areas = true
 	raycast.top_level = true
 	raycast.target_position = Vector2()
-	point_to = $Node/LinePos.global_position
+	point_to = global_position
 	get_parent().call_deferred("add_child",raycast)
 	raycast.global_position = $Node/LinePos.global_position
+	line.add_point(global_position)
 
 func reset():
 	$Line2D.clear_points()

@@ -27,3 +27,14 @@ func _process(delta):
 
 func set_pos(val):
 	reset_state = val
+
+func delete():
+	sleeping = true
+	set_physics_process_internal(false)
+	linear_velocity = Vector2()
+	$GPUParticles2D.emitting = false
+	$Sprite2D.visible = false
+	$Timer.start(1)
+
+func _on_timer_timeout():
+	queue_free()
