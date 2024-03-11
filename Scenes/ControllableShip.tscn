@@ -9,4 +9,8 @@ team = 0
 acceleration = 20
 max_speed = 250
 
+[node name="Line2D" parent="." index="2"]
+show_behind_parent = true
+z_index = 0
+
 [node name="DashTimer" type="Timer" parent="." index="5"]

@@ -81,19 +81,18 @@ func update_data(data: Dictionary):
 	id = data["id"]
 	$Label.text = str(data["num"])
 
-func to_directional(inp: Vector2):
+func to_directional(inp: Vector2) -> Vector2:
 	if inp.is_zero_approx():
 		return Vector2()
 	var dir = inp.normalized()
-	if dir.dot(Vector2.RIGHT) > 0.72:
-		dir = Vector2(1,0)
-	elif dir.dot(Vector2.UP) > 0.72:
-		dir = Vector2(0,-1)
-	elif dir.dot(Vector2.LEFT) > 0.72:
-		dir = Vector2(-1,0)
-	elif dir.dot(Vector2.DOWN) > 0.72:
-		dir = Vector2(0,1)
-	return dir
+	if dir.dot(Vector2.RIGHT) > 0.717:
+		return Vector2(1,0)
+	elif dir.dot(Vector2.UP) > 0.717:
+		return Vector2(0,-1)
+	elif dir.dot(Vector2.LEFT) > 0.717:
+		return Vector2(-1,0)
+	else:
+		return Vector2(0,1)
 
 func change_dir():
 	if not has_started:

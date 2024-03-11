@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3 uid="uid://kxc64n4r1j28"]
+
+[ext_resource type="PackedScene" uid="uid://djpc4dborehvi" path="res://Scenes/ControllableShip.tscn" id="1_8y0gu"]
+[ext_resource type="Script" path="res://Scripts/PaperShip.gd" id="2_agn4i"]
+[ext_resource type="Shader" path="res://Scenes/PaperOutline.gdshader" id="3_8g50q"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2vgwl"]
+shader = ExtResource("3_8g50q")
+
+[sub_resource type="Gradient" id="Gradient_4xc62"]
+offsets = PackedFloat32Array(0, 0.180328, 0.819672, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5syka"]
+gradient = SubResource("Gradient_4xc62")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nag4k"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(640, 360, 1)
+gravity = Vector3(0, -10, 0)
+scale_min = 2.0
+scale_max = 4.0
+color_ramp = SubResource("GradientTexture1D_5syka")
+turbulence_enabled = true
+
+[node name="PaperShip" instance=ExtResource("1_8y0gu")]
+script = ExtResource("2_agn4i")
+
+[node name="FollowingLine" type="Line2D" parent="." index="6"]
+modulate = Color(1, 1, 1, 0.34902)
+top_level = true
+
+[node name="Polygon2D" type="Polygon2D" parent="." index="7"]
+top_level = true
+z_index = -1
+
+[node name="Polygon2D2" type="Polygon2D" parent="." index="8"]
+top_level = true
+z_index = -1
+material = SubResource("ShaderMaterial_2vgwl")
+
+[node name="SubViewport" type="SubViewport" parent="." index="9"]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(1280, 720)
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="SubViewport" index="0"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="SubViewport/ParallaxBackground" index="0"]
+motion_mirroring = Vector2(1280, 720)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="SubViewport/ParallaxBackground/ParallaxLayer" index="0"]
+position = Vector2(640, 360)
+amount = 36
+process_material = SubResource("ParticleProcessMaterial_nag4k")
+lifetime = 6.0
+preprocess = 5.0
+visibility_rect = Rect2(-640, -360, 1280, 720)

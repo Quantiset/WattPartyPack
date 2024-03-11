@@ -1,4 +1,5 @@
 extends Ship
+class_name ControllableShip
 
 @export var team := 0
 

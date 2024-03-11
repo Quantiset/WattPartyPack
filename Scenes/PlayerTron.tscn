@@ -4,8 +4,7 @@
 [ext_resource type="Script" path="res://Scripts/PlayerTron.gd" id="1_xf72d"]
 [ext_resource type="FontFile" uid="uid://bnr06kp1ppaba" path="res://Assets/PressStart2P-Regular.ttf" id="3_sf8yi"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7hlqs"]
-size = Vector2(16, 14)
+[sub_resource type="CircleShape2D" id="CircleShape2D_d2g3w"]
 
 [sub_resource type="Gradient" id="Gradient_cs3dj"]
 offsets = PackedFloat32Array(0, 0.311475, 1)
@@ -37,7 +36,7 @@ texture = ExtResource("1_j0y8b")
 offset = Vector2(-0.5, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_7hlqs")
+shape = SubResource("CircleShape2D_d2g3w")
 
 [node name="Line2D" type="Line2D" parent="."]
 modulate = Color(0.25098, 1, 0.87451, 1)

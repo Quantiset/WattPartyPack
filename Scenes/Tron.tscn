@@ -145,3 +145,24 @@ metadata/_edit_lock_ = true
 
 [node name="PlayerTron" parent="." instance=ExtResource("4_24kho")]
 position = Vector2(192, 168)
+
+[node name="Line2D" type="Line2D" parent="."]
+visible = false
+position = Vector2(-42, 0)
+points = PackedVector2Array(680, 0, 42, 0, 40, 720, 680, 720)
+width = 5.0
+default_color = Color(1, 1, 1, 0.690196)
+
+[node name="Line2D2" type="Line2D" parent="."]
+visible = false
+position = Vector2(1320, 716)
+scale = Vector2(-1, -1)
+points = PackedVector2Array(682, -4, 40, -4, 40, 716, 682, 716)
+width = 5.0
+default_color = Color(1, 1, 1, 0.690196)
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+visible = false
+z_index = -1
+color = Color(0.00784314, 0.0392157, 0.0705882, 1)
+polygon = PackedVector2Array(0, 0, 110, -109, 1283, -106, 1282, 0, 110, 1, 110, 160, 35, 250, 35, 470, 110, 560, 110, 720, 1332, 720, 1331, 802, -126, 794)

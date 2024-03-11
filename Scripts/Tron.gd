@@ -5,9 +5,8 @@ extends Map
 var players_left := 0
 
 func _ready():
-	$Pause.show()
+	player_enable_func = "t_enable"
 	PLAYER_SCENE = preload("res://Scenes/PlayerTron.tscn")
-	Websocket.client_connected.connect(_player_connected)
 
 func _player_connected(data: Dictionary):
 	var player = super._player_connected(data)
@@ -18,17 +17,6 @@ func _player_connected(data: Dictionary):
 	player.position = Vector2(randi() % 950 + 120, randi() % 500 + 100)
 
 func _physics_process(delta):
-	
-	if not is_enabled:
-		init_timer -= delta
-		$Pause/CenterContainer/VBoxContainer/Label2.modulate.h += delta
-		$Pause/CenterContainer/VBoxContainer/Label2.text = "Starting in " + str(int(init_timer))
-		if init_timer < 0:
-			$Pause.hide()
-			get_tree().call_group("Player", "t_enable")
-			is_enabled = true
-		else:
-			return
 	
 	for raycast in raycasts:
 		raycast.force_raycast_update()

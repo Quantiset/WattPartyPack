@@ -3,6 +3,7 @@ class_name Map
 
 var players := 0
 
+var player_enable_func = "enable"
 var init_timer := Globals.LOADING_TIME
 var is_enabled := false
 
@@ -28,6 +29,17 @@ func _player_connected(data: Dictionary):
 
 func _process(delta):
 	$Background.scroll_offset += Vector2(1,0.2) * delta * 2
+	
+	if not is_enabled:
+		init_timer -= delta
+		$Pause/CenterContainer/VBoxContainer/Label2.modulate.h += delta
+		$Pause/CenterContainer/VBoxContainer/Label2.text = "Starting in " + str(int(init_timer))
+		if init_timer < 0:
+			$Pause.hide()
+			get_tree().call_group("Player", player_enable_func)
+			is_enabled = true
+		else:
+			return
 
 func shockwave(pos, push_players := true):
 	var uv = (pos - ($Camera2D.position + $Camera2D.offset - Vector2(1280, 720)/2)) / Vector2(1280, 720)
