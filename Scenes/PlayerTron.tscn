@@ -49,6 +49,7 @@ joint_mode = 1
 [node name="Node" type="Node2D" parent="."]
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Node"]
+visible = false
 modulate = Color(1, 1, 1, 0.0509804)
 show_behind_parent = true
 z_index = -1
