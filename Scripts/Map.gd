@@ -1,6 +1,16 @@
 extends Node2D
 class_name Map
 
+const COLOR_COMBINATIONS = [
+	[Color("b700ff89"), Color("8a00e677")],
+	[Color("b700ff89"), Color("8a00e677")],
+	[Color("b700ff89"), Color("8a00e677")],
+	[Color("ff1414ab"), Color("f5405bbe")],
+	[Color("24b34a9a"), Color("35de5d9a")],
+	[Color("b3249b9a"), Color("de357e9a")],
+	[Color("b3249b9a"), Color("de357e9a")],
+]
+
 var players := 0
 
 var player_enable_func = "enable"
@@ -13,6 +23,9 @@ var PLAYER_SCENE := preload("res://Scenes/ControllableShip.tscn")
 
 func _ready():
 	$Pause.show()
+	var random_bg_idx : int = randi() % COLOR_COMBINATIONS.size()
+	$Background/ParallaxLayer/Sprite2D.modulate = COLOR_COMBINATIONS[random_bg_idx][0]
+	$Background/ParallaxLayer2/Sprite2D.modulate = COLOR_COMBINATIONS[random_bg_idx][1]
 	Websocket.client_connected.connect(_player_connected)
 
 func _player_connected(data: Dictionary):

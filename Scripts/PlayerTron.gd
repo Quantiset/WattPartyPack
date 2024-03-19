@@ -42,7 +42,9 @@ func _physics_process(delta):
 	if not is_enabled:
 		return
 	
-	dir = to_directional(Vector2(Input.get_axis("ui_left", "ui_right"), Input.get_axis("ui_up", "ui_down")))
+	var tmp_dir = to_directional(Vector2(Input.get_axis("ui_left", "ui_right"), Input.get_axis("ui_up", "ui_down")))
+	if tmp_dir.length_squared() > 0.1 and tmp_dir != -dir:
+		dir = tmp_dir
 	
 	if not dir.is_zero_approx() and dir != cached_dir:
 		cached_dir = dir
@@ -77,7 +79,9 @@ func update_data(data: Dictionary):
 		x = float(data["joy"]["x"])
 	if str(data["joy"]["y"]).is_valid_float():
 		y = float(data["joy"]["y"])
-	dir = to_directional(Vector2(x,y))
+	var tmp_dir = to_directional(Vector2(x,y))
+	if tmp_dir != -dir:
+		dir = tmp_dir
 	id = data["id"]
 	$Label.text = str(data["num"])
 

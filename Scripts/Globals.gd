@@ -1,5 +1,6 @@
 extends Node
 
+
 var LOADING_TIME := 0.9
 
 var queued_scenes := []
