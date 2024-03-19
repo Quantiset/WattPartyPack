@@ -41,11 +41,11 @@ func _physics_process(delta):
 func _player_death(player):
 	players_left -= 1
 	if players_left == 3:
-		Websocket.id_to_scores[player.id] += 1
+		Websocket.scores[player.id] += 1
 	if players_left == 2:
-		Websocket.id_to_scores[player.id] += 2
+		Websocket.scores[player.id] += 2
 	if players_left == 1:
-		Websocket.id_to_scores[player.id] += 3
+		Websocket.scores[player.id] += 3
 		$Leaderboards.display()
 		init_timer = 999999
 		is_enabled = false

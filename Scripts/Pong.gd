@@ -42,7 +42,7 @@ func update_scores():
 		for player in get_tree().get_nodes_in_group("Player"):
 			if player.team == winning_team:
 				break
-				Websocket.id_to_scores[player.id] += 2
+				Websocket.scores[player.id] += 2
 		$Leaderboards.display()
 		init_timer = 999999
 		is_enabled = false

@@ -1,53 +1,77 @@
 extends Node
 
-var websocket_url = "ws://watt-party-pack.in-my-ellement.partykit.dev/party/my-new-room"
+# port for websocket server
+const PORT = 9080
 
-var socket := WebSocketPeer.new()
+# instance of the websocket server and the tcp it is hosted on
+var tcp = TCPServer.new() 
+var ws = WebSocketPeer.new()
 
-var id_to_player := {}
-var id_to_scores := {}
+# maintain a map of ids to players
+var players := {}
 
+# map of player ids to their scores
+var scores := {}
+
+# let the other scripts know when a new player has joined
 signal client_connected(data)
 
+# called when a new player is discovered
+func register_player(player: Dictionary):
+	if !players.has(player.id) and is_instance_valid(players[player.id]):
+			# add this player to the list of current players
+			players[player.id] = player
+			
+			# set their score to zero
+			scores[player.id] = 0
+
+# Called when the node enters the scene tree for the first time.
 func _ready():
-	randomize()
-	socket.connect_to_url(websocket_url)
+	# run the tcp server on the given port
+	if tcp.listen(PORT) != OK:
+		# prevents _process from being called if server doesn't start
+		print("error starting server")
+		set_process(false)
 
-func register_player(id: String, player):
-	if not id in id_to_scores:
-		id_to_scores[id] = 0
-		id_to_player[id] = player
-
-func parse_data(data: Dictionary):
-	if data.id in id_to_player and is_instance_valid(id_to_player[data.id]):
-		id_to_player[data.id].update_data(data)
+# called from inside _process when receiving new packets
+func _recv(data):
+	# instantiate a json object from packet data
+	var json = JSON.new()
+	var err = json.parse(data)
+	
+	# check for errors in json parsing
+	if err == OK and typeof(json.data) == TYPE_DICTIONARY:
+		# make a player object from this
+		var player = json.data
+		
+		# register a new player if they havent been seen yet
+		if !players.has(player.id) and is_instance_valid(players[player.id]):
+			# add this player to the list of current players
+			register_player(player)
+			
+			# emit the signal for a new player
+			client_connected.emit(player)
+		else:
+			# update to an existing player
+			players[player.id].update_data(player, true)
 	else:
-		client_connected.emit(data)
+		print("Unexpected packet: " + data)
 
+# called each frame
 func _process(delta):
-	socket.poll()
-	var state = socket.get_ready_state()
-	if state == WebSocketPeer.STATE_OPEN:
-		while socket.get_available_packet_count():
-			var str = ""
-			for ascii_val in socket.get_packet():
-				str += char(ascii_val)
-			var json = JSON.new()
-			var error = json.parse(str)
-			if error == OK:
-				var data_received = json.data
-				if typeof(data_received) == TYPE_DICTIONARY:
-					parse_data(data_received)
-				else:
-					print("Unexpected data")
-			else:
-				print("JSON Parse Error: ", json.get_error_message(), " in ", str, " at line ", json.get_error_line())
-	elif state == WebSocketPeer.STATE_CLOSING:
-		# Keep polling to achieve proper close.
-		pass
-	elif state == WebSocketPeer.STATE_CLOSED:
-		var code = socket.get_close_code()
-		var reason = socket.get_close_reason()
-		print("WebSocket closed with code: %d, reason %s. Clean: %s" % [code, reason, code != -1])
-		set_process(false) # Stop processing.
-
+	# accept incoming connections over tcp
+	while tcp.is_connection_available():
+		# get this connection
+		var conn: StreamPeerTCP = tcp.take_connection()
+		
+		# pass it to the websocket server
+		if (conn != null): ws.accept_stream(conn)
+	
+	# update the websockets
+	ws.poll()
+	
+	# if the ws connection is open, read in new packets
+	if ws.get_ready_state() == WebSocketPeer.STATE_OPEN:
+		while ws.get_available_packet_count():
+			# process stringified packet using a diff function
+			_recv(ws.get_packet().get_string_from_ascii())

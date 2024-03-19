@@ -24,7 +24,7 @@ func _player_connected(data: Dictionary):
 		else:
 			player.enable()
 	players += 1
-	Websocket.register_player(data.id, player)
+	Websocket.register_player(player)
 	return player
 
 func _process(delta):
