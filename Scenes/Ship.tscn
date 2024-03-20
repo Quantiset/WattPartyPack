@@ -50,6 +50,7 @@ width_curve = SubResource("Curve_rvqhb")
 [node name="Pivot" type="Node2D" parent="."]
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Pivot"]
+visible = false
 modulate = Color(1, 1, 1, 0.0509804)
 show_behind_parent = true
 z_index = -1

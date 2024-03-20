@@ -6,8 +6,11 @@ HUGE THANKS TO THE FOLLOWING SOURCES:
 	
 	SHADER CODE:
 		Shockwave shader @ https://godotshaders.com/shader/distortion/
+		Sobel Edge shader @ https://godotshaders.com/shader/edge-detection-sobel-filter-and-gaussian-blur/
 	
 	MUSIC:
+		
+	
 
 
 AND OF COURSE, THANKS TO:
@@ -17,6 +20,8 @@ AND OF COURSE, THANKS TO:
 	Clemson CUHackit for giving us a reason to make this and convert an old project of mine
 	
 	Our team members that worked on it:
-		https://github.com/in-my-ellement/watt-party-pack
+		https://github.com/quantiset
+		https://github.com/in-my-ellement
+	
 
 """

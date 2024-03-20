@@ -6,9 +6,9 @@ class_name ControllableShip
 @export var acceleration = 20
 @export var max_speed = 250
 
-var is_dashing := false
-
 var can_shoot := false
+var bounces := 0
+var shots := 1
 
 var x: float
 var y: float
@@ -32,12 +32,17 @@ func update_data(data):
 		y = float(data["joy"]["y"])
 	super.update_data(data)
 
-func shoot(dir_ = Vector2(240,0), angle_override = 0):
-	var b = preload("res://Scenes/Bullet.tscn").instantiate()
-	b.position = position
-	b.velocity = dir_
-	b.emitter = self
-	get_parent().add_child(b)
+func shoot(dir_ = Vector2(240,0), shots_override = false):
+	var shots_this = shots
+	if shots_override:
+		shots_this = 1
+	for i in range(shots_this):
+		var b = preload("res://Scenes/Bullet.tscn").instantiate()
+		b.position = position
+		b.velocity = dir_.rotated( (0 if shots_this == 1 else -PI/8)+(0.25*i*PI/shots_this) )
+		b.bounces = bounces
+		b.emitter = self
+		get_parent().call_deferred("add_child", b)
 
 func take_damage():
 	disable()

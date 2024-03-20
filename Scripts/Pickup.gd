@@ -1,6 +1,10 @@
 extends Area2D
 
 @export var lifetime := 10
+var type = Globals.PICKUPS.SpeedUp:
+	set(val):
+		type = val
+		$Sprite2D.texture = Globals.PICKUP_INFORMATION[val].texture
 
 func _ready():
 	var t := get_tree().create_tween()

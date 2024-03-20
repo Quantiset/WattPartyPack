@@ -5,6 +5,7 @@ extends Map
 var players_left := 0
 
 func _ready():
+	super._ready()
 	player_enable_func = "t_enable"
 	PLAYER_SCENE = preload("res://Scenes/PlayerTron.tscn")
 
