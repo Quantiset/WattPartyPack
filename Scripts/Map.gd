@@ -43,7 +43,7 @@ func _player_connected(data: Dictionary):
 func _process(delta):
 	$Background.scroll_offset += Vector2(1,0.2) * delta * 2
 	
-	if not is_enabled:
+	if not is_enabled and $Leaderboards/AnimationPlayer.is_playing():
 		init_timer -= delta
 		$Pause/CenterContainer/VBoxContainer/Label2.modulate.h += delta
 		$Pause/CenterContainer/VBoxContainer/Label2.text = "Starting in " + str(int(init_timer))

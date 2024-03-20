@@ -18,4 +18,6 @@ end_cap_mode = 2
 rotation = 1.57239
 shape = SubResource("CapsuleShape2D_pnw87")
 
+[node name="RayCast2D" type="RayCast2D" parent="."]
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

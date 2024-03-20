@@ -3,11 +3,21 @@ extends CanvasLayer
 signal done
 
 func _ready():
+	$Sprite2D.show()
+	$ColorRect.hide()
+	$CenterContainer.hide()
+	$AnimationPlayer.play_backwards("Dither")
 	done.connect(_animation_finished)
 
 func display():
+	
+	if $AnimationPlayer.is_playing():
+		await $AnimationPlayer.animation_finished
+	
 	$CenterContainer/VBoxContainer/Label2.text = ""
-	show()
+	$ColorRect.show()
+	$CenterContainer.show()
+	
 	$AnimationPlayer.play("FadeIn")
 	
 	var scores = Websocket.id_to_scores.keys()
@@ -27,5 +37,7 @@ func display():
 	done.emit()
 
 func _animation_finished():
+	$AnimationPlayer.play("Dither")
+	await $AnimationPlayer.animation_finished
 	Globals.next_scene()
 

@@ -1,7 +1,24 @@
-[gd_scene load_steps=6 format=3 uid="uid://dnfc5q03vmfec"]
+[gd_scene load_steps=11 format=3 uid="uid://dnfc5q03vmfec"]
 
 [ext_resource type="Script" path="res://Scripts/Leaderboards.gd" id="1_2vb44"]
 [ext_resource type="FontFile" uid="uid://bnr06kp1ppaba" path="res://Assets/PressStart2P-Regular.ttf" id="2_44t64"]
+[ext_resource type="Shader" path="res://Scripts/DissipateDiamond.gdshader" id="3_0arv6"]
+[ext_resource type="Texture2D" uid="uid://ksmflrjxxil5" path="res://icon.svg" id="4_k472x"]
+
+[sub_resource type="Animation" id="Animation_wtbhq"]
+resource_name = "Dither"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
 
 [sub_resource type="Animation" id="Animation_au4sx"]
 resource_name = "FadeIn"
@@ -59,27 +76,51 @@ tracks/1/keys = {
 "values": [Vector2(0, 0), Vector2(1280, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_4axsr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5q0tc"]
 _data = {
+"Dither": SubResource("Animation_wtbhq"),
 "FadeIn": SubResource("Animation_au4sx"),
-"FadeOut": SubResource("Animation_sthl5")
+"FadeOut": SubResource("Animation_sthl5"),
+"RESET": SubResource("Animation_4axsr")
 }
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_prqcr"]
+shader = ExtResource("3_0arv6")
+shader_parameter/progress = 0.0
+shader_parameter/diamondPixelSize = 50.0
 
 [node name="Leaderboards" type="CanvasLayer"]
 process_mode = 3
-visible = false
 script = ExtResource("1_2vb44")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 offset_right = 1278.0
 offset_bottom = 718.0
 color = Color(0, 0, 0, 0.627451)
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 0.000488281
+offset_right = 6400.0
+offset_bottom = 3600.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -109,3 +150,11 @@ horizontal_alignment = 1
 libraries = {
 "": SubResource("AnimationLibrary_5q0tc")
 }
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_prqcr")
+position = Vector2(640, 361.5)
+rotation = 3.14159
+scale = Vector2(10, 5.60156)
+texture = ExtResource("4_k472x")

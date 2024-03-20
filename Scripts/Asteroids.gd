@@ -33,9 +33,10 @@ func _physics_process(delta):
 	timer_since_last_pickup += delta
 	if randi() % 230 == 1 and timer_since_last_pickup > 1.4:
 		var pickup = preload("res://Scenes/Pickup.tscn").instantiate()
-		pickup.body_entered.connect(_pickup_body_entered.bind(pickup))
 		pickup.position = $Center.position + Vector2(randi()%400,0).rotated(2*PI*randf())
+		pickup.type = Globals.PICKUPS.SpeedUp if randi()%4 < 3 else (Globals.PICKUPS.BouncingBullets if randi() % 2 == 1 else Globals.PICKUPS.DoubleShot)
 		add_child(pickup)
+		pickup.body_entered.connect(_pickup_body_entered.bind(pickup))
 		timer_since_last_pickup = 0
 
 func _player_death(player):
@@ -53,8 +54,17 @@ func _player_death(player):
 
 func _pickup_body_entered(body, pickup):
 	if body.is_in_group("Player"):
+		print(pickup.type)
+		
+		match pickup.type:
+			Globals.PICKUPS.SpeedUp:
+				var point = Vector2(240,0)
+				for i in range(9):
+					body.shoot(point, true)
+					point = point.rotated(2*PI*i/9+randf())
+			Globals.PICKUPS.DoubleShot:
+				body.shots += 1
+			Globals.PICKUPS.BouncingBullets:
+				body.bounces += 1
+		
 		pickup.queue_free()
-		var point = Vector2(240,0)
-		for i in range(9):
-			body.shoot(point)
-			point = point.rotated(2*PI*i/9+randf())
