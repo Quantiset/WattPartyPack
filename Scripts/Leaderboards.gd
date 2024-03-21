@@ -20,12 +20,12 @@ func display():
 	
 	$AnimationPlayer.play("FadeIn")
 	
-	var scores = Websocket.scores.keys()
+	var scores = Websocket.id_to_scores.keys()
 	scores.sort()
 	
 	var i := 0
 	for player_id in scores:
-		$CenterContainer/VBoxContainer/Label2.text += "Player " + str(i) + ": " + str(Websocket.scores[player_id]) + "\n"
+		$CenterContainer/VBoxContainer/Label2.text += "Player " + str(i) + ": " + str(Websocket.id_to_scores[player_id]) + "\n"
 		i += 1
 	
 	await get_tree().create_timer(5.5).timeout
