@@ -6,8 +6,11 @@
 [node name="ControllableShip" instance=ExtResource("1_mwcv5")]
 script = ExtResource("1_t0hiq")
 team = 0
-acceleration = 20
+acceleration = 15
 max_speed = 250
+dash_speed_scale = 1.6
+dash_acc_scale = 1.25
+dash_push_scale = 2.0
 
 [node name="Line2D" parent="." index="2"]
 show_behind_parent = true

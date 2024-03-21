@@ -3,8 +3,11 @@ class_name ControllableShip
 
 @export var team := 0
 
-@export var acceleration = 20
+@export var acceleration = 15
 @export var max_speed = 250
+@export var dash_speed_scale := 1.6
+@export var dash_acc_scale := 1.25
+@export var dash_push_scale := 2.0
 
 var can_shoot := false
 var bounces := 0
@@ -49,14 +52,8 @@ func take_damage():
 	dead.emit()
 	position.x = 10000
 
-func dash():
-	is_dashing = true
-	var t := get_tree().create_tween()
-	$Sprite2D.modulate = Color(7,7,7)
-	t.tween_property($Sprite2D, "modulate", Color(1,1,1), 2)
-	t.tween_callback(set.bindv(["is_dashing", false]))
-
 func _physics_process(delta):
+	print(is_dashing)
 	$Pivot/GPUParticles2D.emitting = velocity.length() > 2
 	
 	if not is_enabled: return
@@ -72,9 +69,9 @@ func _physics_process(delta):
 		)
 	
 	velocity += Vector2(Input.get_axis("ui_left", "ui_right"), Input.get_axis("ui_up", "ui_down")) * acceleration * (1.15 if is_dashing else 1.0)
-	velocity += Vector2(x, y) * acceleration * (1.15 if is_dashing else 1.0)
-	if velocity.length() > max_speed * (1.45 if is_dashing else 1.0):
-		velocity = velocity.normalized() * max_speed * (1.45 if is_dashing else 1.0)
+	velocity += Vector2(x, y) * acceleration * (dash_acc_scale if is_dashing else 1.0)
+	if velocity.length() > max_speed * (dash_speed_scale if is_dashing else 1.0):
+		velocity = velocity.normalized() * max_speed * (dash_speed_scale if is_dashing else 1.0)
 	velocity = velocity.lerp(Vector2(), 0.02)
 	
 	$Sprite2D.rotation = velocity.angle() + PI/2
@@ -86,6 +83,8 @@ func _physics_process(delta):
 		var col = get_slide_collision(slide_idx)
 		var collider = col.get_collider()
 		if collider.is_in_group("Ball"):
-			collider.apply_central_impulse((collider.global_position - global_position) * 2)
+			velocity -= (collider.global_position - global_position) * 2
+			print(collider.global_position - global_position)
+			collider.apply_central_impulse((collider.global_position - global_position) * 2 * (dash_push_scale if is_dashing else 1))
 
 

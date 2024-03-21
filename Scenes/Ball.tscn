@@ -57,6 +57,7 @@ texture_filter = 1
 texture = ExtResource("2_vpajb")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+visible = false
 modulate = Color(1, 1, 1, 0.0509804)
 show_behind_parent = true
 z_index = -1

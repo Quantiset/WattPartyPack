@@ -11,6 +11,7 @@ func _ready():
 
 func _player_connected(data: Dictionary):
 	var player = super._player_connected(data)
+	players_left += 1
 	if init_timer > 0:
 		player.t_disable()
 	else:
@@ -26,11 +27,11 @@ func _physics_process(delta):
 				raycast.get_collider().disable()
 				players_left -= 1
 				if players_left == 3:
-					Websocket.id_to_scores[raycast.get_collider().id] += 1
+					Websocket.scores[raycast.get_collider().id] += 1
 				if players_left == 2:
-					Websocket.id_to_scores[raycast.get_collider().id] += 2
+					Websocket.scores[raycast.get_collider().id] += 2
 				if players_left == 1:
-					Websocket.id_to_scores[raycast.get_collider().id] += 3
+					Websocket.scores[raycast.get_collider().id] += 3
 					reset()
 
 

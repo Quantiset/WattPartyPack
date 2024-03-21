@@ -26,9 +26,10 @@ turbulence_enabled = true
 
 [node name="PaperShip" instance=ExtResource("1_8y0gu")]
 script = ExtResource("2_agn4i")
-team = 0
-acceleration = 20
-max_speed = 250
+acceleration = 15
+dash_speed_scale = 1.6
+dash_acc_scale = 1.25
+dash_push_scale = 2.0
 
 [node name="GPUParticles2D" parent="Pivot" index="0"]
 visible = true

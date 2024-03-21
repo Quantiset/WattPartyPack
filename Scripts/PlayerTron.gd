@@ -9,6 +9,7 @@ var velocity := Vector2()
 var point_to := Vector2()
 
 var raycasts := []
+@onready var current_particle = $Line2D/GPUParticles2D
 
 var frames := 0
 
@@ -25,11 +26,11 @@ var id: String
 
 func _ready():
 	
-	trail_mod = Color.from_hsv(randf(),1,1)
+	# trail_mod = Color.from_hsv(randf(),1,1)
 	raycast = RayCast2D.new()
 	raycasts.append(raycast)
 	raycast.top_level = true
-	$Line2D.modulate.h += (randi() % 50) / 100.0
+	#$Line2D.modulate.h += (randi() % 50) / 100.0
 	point_to = $Node/LinePos.global_position
 	raycast.exclude_parent = true
 	get_parent().call_deferred("add_child",raycast)
@@ -63,6 +64,15 @@ func _physics_process(delta):
 	if is_raycasting:
 		raycast.position = position
 		raycast.target_position = point_to - $Node/LinePos.global_position
+		
+		current_particle.amount = ($Node/LinePos.global_position - point_to).length() / 15
+		current_particle.position = (point_to + $Node/LinePos.global_position) / 2
+		current_particle.rotation = ($Node/LinePos.global_position - point_to).angle()
+		current_particle.process_material.emission_box_extents = Vector3(
+			($Node/LinePos.global_position - point_to).length()/2,
+			2,1
+		)
+		
 		line.remove_point(line.get_point_count()-1)
 		line.add_point(global_position)
 
@@ -109,12 +119,15 @@ func change_dir():
 	raycast.top_level = true
 	raycast.target_position = Vector2()
 	point_to = global_position
-	get_parent().call_deferred("add_child",raycast)
+	current_particle = current_particle.duplicate()
+	current_particle.process_material = current_particle.process_material.duplicate() 
+	get_parent().add_child.call_deferred(current_particle)
+	get_parent().add_child.call_deferred(raycast)
 	raycast.global_position = $Node/LinePos.global_position
 	line.add_point(global_position)
 
 func reset():
-	$Line2D.clear_points()
+	line.clear_points()
 
 func disable():
 	is_raycasting = false

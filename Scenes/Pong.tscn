@@ -37,8 +37,13 @@ turbulence_enabled = true
 [sub_resource type="Environment" id="Environment_dw4c4"]
 background_mode = 3
 glow_enabled = true
-glow_bloom = 0.1
+glow_intensity = 1.8
+glow_strength = 0.65
+glow_bloom = 0.27
 glow_blend_mode = 0
+adjustment_enabled = true
+adjustment_contrast = 1.08
+adjustment_saturation = 1.26
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ysdtp"]
 shader = ExtResource("6_rdhw7")
@@ -287,14 +292,14 @@ environment = SubResource("Environment_dw4c4")
 [node name="Polygon2D" type="Polygon2D" parent="."]
 z_index = -1
 color = Color(0.00784314, 0.0392157, 0.0705882, 1)
-polygon = PackedVector2Array(0, 0, 110, -109, 1283, -106, 1282, 0, 110, 1, 110, 160, 35, 250, 35, 470, 110, 560, 110, 720, 1332, 720, 1331, 802, -3, 783)
+polygon = PackedVector2Array(-94, -83, 77, -147, 1383, -122, 1282, 0, 110, 1, 110, 160, 35, 250, 35, 470, 110, 560, 110, 720, 1332, 720, 1450, 805, -73, 840)
 
 [node name="Polygon2D2" type="Polygon2D" parent="."]
 z_index = -1
 position = Vector2(1280, 720)
 scale = Vector2(-1, -1)
 color = Color(0.00784314, 0.0392157, 0.0705882, 1)
-polygon = PackedVector2Array(0, 0, 110, 0, 110, 160, 35, 250, 35, 470, 110, 560, 110, 720, 0, 720)
+polygon = PackedVector2Array(-93, -54, 110, 0, 110, 160, 35, 250, 35, 470, 110, 560, 110, 720, -92, 825)
 
 [node name="Pause" type="CanvasLayer" parent="."]
 visible = false

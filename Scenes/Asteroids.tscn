@@ -137,4 +137,7 @@ centered = false
 metadata/_edit_lock_ = true
 
 [node name="ControllableShip" parent="." instance=ExtResource("4_7k3c8")]
-team = 0
+acceleration = 15
+dash_speed_scale = 1.6
+dash_acc_scale = 1.25
+dash_push_scale = 2.0

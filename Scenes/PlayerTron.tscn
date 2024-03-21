@@ -1,10 +1,37 @@
-[gd_scene load_steps=8 format=3 uid="uid://of6c7vsy1bpo"]
+[gd_scene load_steps=13 format=3 uid="uid://of6c7vsy1bpo"]
 
 [ext_resource type="Texture2D" uid="uid://duo57ix54qi3q" path="res://Assets/Player.png" id="1_j0y8b"]
 [ext_resource type="Script" path="res://Scripts/PlayerTron.gd" id="1_xf72d"]
 [ext_resource type="FontFile" uid="uid://bnr06kp1ppaba" path="res://Assets/PressStart2P-Regular.ttf" id="3_sf8yi"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d2g3w"]
+
+[sub_resource type="Gradient" id="Gradient_1lwpl"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5dx1k"]
+gradient = SubResource("Gradient_1lwpl")
+
+[sub_resource type="Curve" id="Curve_sd26v"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.506667, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.395604), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_2bo0i"]
+curve = SubResource("Curve_sd26v")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3jvpn"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(50, 1, 1)
+angle_max = 90.0
+spread = 180.0
+initial_velocity_min = 12.0
+initial_velocity_max = 24.0
+gravity = Vector3(0, 0, 0)
+scale_min = 7.0
+scale_max = 10.0
+scale_curve = SubResource("CurveTexture_2bo0i")
+color_ramp = SubResource("GradientTexture1D_5dx1k")
 
 [sub_resource type="Gradient" id="Gradient_cs3dj"]
 offsets = PackedFloat32Array(0, 0.311475, 1)
@@ -39,12 +66,22 @@ offset = Vector2(-0.5, 0)
 shape = SubResource("CircleShape2D_d2g3w")
 
 [node name="Line2D" type="Line2D" parent="."]
-modulate = Color(0.251, 1, 0.875, 1)
+modulate = Color(0.251, 1.6, 5, 1)
 show_behind_parent = true
 top_level = true
 z_index = -2
-width = 6.0
+width = 11.0
 joint_mode = 1
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Line2D"]
+modulate = Color(0.251, 1.6, 5, 1)
+top_level = true
+position = Vector2(1, 0)
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_3jvpn")
+lifetime = 1.2
+trail_lifetime = 4.49
+trail_section_subdivisions = 1
 
 [node name="Node" type="Node2D" parent="."]
 

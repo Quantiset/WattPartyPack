@@ -30,14 +30,14 @@ func _ready():
 
 func _player_connected(data: Dictionary):
 	var player = PLAYER_SCENE.instantiate()
-	add_child(player)
+	add_child.call_deferred(player)
 	if player.has_method("enable"):
 		if init_timer > 0:
 			player.disable()
 		else:
 			player.enable()
 	players += 1
-	Websocket.register_player(data.id, player)
+	Websocket.register_player(player)
 	return player
 
 func _process(delta):

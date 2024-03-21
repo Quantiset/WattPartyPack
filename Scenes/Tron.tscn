@@ -151,7 +151,6 @@ visible = false
 position = Vector2(-42, 0)
 points = PackedVector2Array(680, 0, 42, 0, 40, 720, 680, 720)
 width = 5.0
-default_color = Color(1, 1, 1, 0.690196)
 
 [node name="Line2D2" type="Line2D" parent="."]
 visible = false
